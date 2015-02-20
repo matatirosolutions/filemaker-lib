@@ -1,0 +1,23 @@
+{
+    "name": "matatirosoln/filemaker-lib",
+    "type": "library",
+    "description": "FileMaker PHP API",
+    "keywords": ["FileMaker", "PHP API", "CWP"],
+    "authors": [
+        {
+            "name": "Steve Winter",
+            "email": "steve@msdev.co.uk",
+            "homepage": "https://msdev.co.uk"
+        }
+    ],
+    "license" : "MIT",
+    "require": {
+    	"php": ">=5.5.0",
+    	"phpmailer/phpmailer": "5.2.*",
+        "katzgrau/klogger": "1.0.*",
+        "matatirosoln/filemaker-api": "13.*"
+    },
+    "autoload": {
+        "psr-4": { "MSDev\\MSLib": "MSDev/MSLib" }
+    }
+}
