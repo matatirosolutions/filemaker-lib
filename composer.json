@@ -1,7 +1,7 @@
 {
     "name": "matatirosoln/filemaker-lib",
     "type": "library",
-    "description": "FileMaker PHP API",
+    "description": "FileMaker PHP API interface",
     "keywords": ["FileMaker", "PHP API", "CWP"],
     "authors": [
         {
@@ -18,6 +18,6 @@
         "matatirosoln/filemaker-api": "13.*"
     },
     "autoload": {
-        "psr-4": { "MSDev\\MSLib": "MSDev/MSLib" }
+        "psr-4": { "MSDev\\MSLib\\": "MSDev/MSLib" }
     }
 }
