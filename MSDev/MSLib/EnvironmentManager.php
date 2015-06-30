@@ -108,27 +108,28 @@ use Exception;
 			$this->set('CodeRoot', $path);
 		
 			$opts							= $this->get('Options');
-			if($opts['Errors']) {
-				$err						= new Error();
-				$this->populate(EnvironmentManager::CONF_PHP, $path.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'errors.php');
-				$this->set('err', $err);
-			}
-
+			
 			if($opts['Helpers']) {
 				$help						= new Helpers();
 				$this->set('h', $help);
 			}
-		
-			if($opts['FileMaker']) {
-				$fm							= new FMConnector($this);
-				$this->set('fm', $fm);
-			}
-
+			
 			if($opts['Mailer']) {
 				$email						= new EmailSender($this);
 				$this->set('mail', $email);
 			}
 			
+			if($opts['Errors']) {
+				$err						= new Error();
+				$this->populate(EnvironmentManager::CONF_PHP, $path.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'errors.php');
+				$this->set('err', $err);
+			}
+			
+			if($opts['FileMaker']) {
+				$fm							= new FMConnector($this);
+				$this->set('fm', $fm);
+			}
+
 			if($opts['Log']) {
 				$log						= new Logger($path.DIRECTORY_SEPARATOR.'log');
 				$this->set('log', $log);

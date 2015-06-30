@@ -45,6 +45,10 @@ class FMException extends \Exception {
 	 * @return string
 	 */
 	public function getFMError() {
-		return $this->fmError;
+		if($this->fmError == '') {
+			return "Database error code {$this->fmCode}";	
+		} else {
+			return $this->fmError;
+		}
 	}
 }

@@ -4,6 +4,7 @@ namespace MSDev\MSLib;
 
 use FileMaker;
 use Exception;
+use MSDev\MSLib\cURLclient;
 
 /**
  * Wrapper class to simplify access to FileMaker
@@ -99,10 +100,16 @@ use Exception;
 		foreach($query as $field => $value) {
 			$cmd->addFindCriterion($field, $value);
 		}
+	
+		// see if we have any limits
+	  	if(array_key_exists('maxRecords', $options)) {
+			$start				= array_key_exists('start', $options) ? $options['start'] : 0;
+			$cmd->setRange($start, $options['maxRecords']);
+		}
 		
 		// execute the call to the database
 		$res						= $cmd->execute();
-		
+	
 		// check and see if FM returned an error, if so throw an exception
 		if(FileMaker::isError($res)) {
 			throw new FMException($res->code, $res->message);
@@ -279,6 +286,38 @@ use Exception;
 				'FileMaker returned error code: '.$e->getFMCode().' message: '.$e->getFMError());
 		}
 	 }
+	 
+	 /**
+	 * The command to extract externally stored document of conatainer field
+	 *
+	 * This function only works for external containers
+	 *
+	 * @param string $reqURL	- required, to pass the container URL
+	 * @return $containerData	- return the conatainer data
+	 * @throws FMPaccessException
+	 *
+	 */
+	 public function getExternalContainerContent($path) {
+	 	$config						= $this->conf->get('FMServer');
+		$protocol					= $config['fmpContainerProtocol'];
+		$prot						= $protocol ? $protocol : 'https'; 
+
+		$this->conf->set('curlUsername', $config['username']);
+		$this->conf->set('curlPassword', $config['password']);
+
+		$url						= "{$prot}://{$config['host']}{$path}";
+
+		$c							= new cURLclient($this->conf);	
+		$res						= $c->sendGet($url);
+
+		if($res[0] != 200) {
+			$log = $this->conf->get('log');
+			$log->debug("Failed to run the extract container $path, data ".print_r($res, true));
+			throw new FMException($res[0], 'Unable to load container content.');
+		}
+		
+		return $res[1];
+	}
 	
 	
 	/**
