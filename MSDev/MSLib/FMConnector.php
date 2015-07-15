@@ -304,6 +304,9 @@ use MSDev\MSLib\cURLclient;
 
 		$this->conf->set('curlUsername', $config['username']);
 		$this->conf->set('curlPassword', $config['password']);
+		if(isset($config['cURLAuthType'])) {
+			$this->conf->set('curlAuthMethod', $config['cURLAuthType']);
+		}
 
 		$url						= "{$prot}://{$config['host']}{$path}";
 

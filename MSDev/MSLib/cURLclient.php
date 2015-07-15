@@ -108,7 +108,8 @@ class cURLclient
 		curl_setopt($this->res, CURLOPT_SSL_VERIFYHOST, $this->env->get('curlVerifyHost'));
 		
 		if($this->env->get('curlUsername') && $this->env->get('curlPassword')) {
-			curl_setopt($this->res, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+			$authMethod				= $this->env->get('curlAuthMethod') ? $this->env->get('curlAuthMethod') : CURLAUTH_ANY;
+			curl_setopt($this->res, CURLOPT_HTTPAUTH, $authMethod);
 			curl_setopt($this->res, CURLOPT_USERPWD, $this->env->get('curlUsername').':'.$this->env->get('curlPassword'));
 		}
 		
