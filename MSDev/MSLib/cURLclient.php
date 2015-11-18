@@ -33,13 +33,14 @@ class cURLclient
 {
 	protected $res;
 	protected $env;
-	
+	protected $conf;
 
 	function __construct(&$env) {
 		$this->env		= &$env;
 		$this->res		= null;
+		$this->conf		= $env->get('Curl');
 
-		$this->single	= $env->get('curlSingle');
+		$this->single	= $this->conf['Single'];
 	}
 
 
@@ -80,44 +81,39 @@ class cURLclient
 	protected function connect($url) {
 		$this->res				= curl_init($url);
 
-		if($this->env->get('curlHTTPHeader')) {
-			curl_setopt($this->res, CURLOPT_HTTPHEADER, $this->env->get('curlHTTPHeader'));
+		if($this->conf['HTTPHeader']) {
+			curl_setopt($this->res, CURLOPT_HTTPHEADER, $this->conf['HTTPHeader']);
 		}
 		
 		curl_setopt($this->res, CURLOPT_HEADER, false);
-		curl_setopt($this->res, CURLOPT_USERAGENT, $this->env->get('curlAgent'));
-		$redir					= $this->env->get('curlRedirect');
+		curl_setopt($this->res, CURLOPT_USERAGENT, $this->conf['Agent']);
+		$redir					= $this->conf['Redirect'];
 		switch($redir) {
-		case 1:
-			curl_setopt($this->res, CURLOPT_FOLLOWLOCATION, true);
-			break;
-
-		case 0:
+		case false:
 			curl_setopt($this->res, CURLOPT_FOLLOWLOCATION, false);
 			break;
 		
-		case null:	
+		default:	
 			curl_setopt($this->res, CURLOPT_FOLLOWLOCATION, true);
 			break;
 
-		default:
 
 		}
-		curl_setopt($this->res, CURLOPT_TIMEOUT, $this->env->get('curlTimelimit')); 
-		curl_setopt($this->res, CURLOPT_SSL_VERIFYPEER, $this->env->get('curlVerifyPeer'));
-		curl_setopt($this->res, CURLOPT_SSL_VERIFYHOST, $this->env->get('curlVerifyHost'));
+		curl_setopt($this->res, CURLOPT_TIMEOUT, $this->conf['Timelimit']); 
+		curl_setopt($this->res, CURLOPT_SSL_VERIFYPEER, $this->conf['VerifyPeer']);
+		curl_setopt($this->res, CURLOPT_SSL_VERIFYHOST, $this->conf['VerifyHost']);
 		
-		if($this->env->get('curlUsername') && $this->env->get('curlPassword')) {
-			$authMethod				= $this->env->get('curlAuthMethod') ? $this->env->get('curlAuthMethod') : CURLAUTH_ANY;
+		if($this->conf['Username'] && $this->conf['Password']) {
+			$authMethod				= $this->conf['AuthMethod'] ? $this->conf['AuthMethod'] : CURLAUTH_ANY;
 			curl_setopt($this->res, CURLOPT_HTTPAUTH, $authMethod);
-			curl_setopt($this->res, CURLOPT_USERPWD, $this->env->get('curlUsername').':'.$this->env->get('curlPassword'));
+			curl_setopt($this->res, CURLOPT_USERPWD, $this->conf['Username'].':'.$this->conf['Password']);
 		}
 		
-		$jar					= $this->env->get('curlCookieJar');
+		$jar					= $this->conf['CookieJar'];
 		if($jar) {
 			curl_setopt($this->res, CURLOPT_COOKIEJAR, $jar);
 		}
-		if($this->env->get('curlVerbose') ) {
+		if($this->conf['Verbose'] ) {
 			curl_setopt($this->res, CURLOPT_VERBOSE, 1);
 		}
 			
