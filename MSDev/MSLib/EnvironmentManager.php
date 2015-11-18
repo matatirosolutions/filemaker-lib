@@ -121,7 +121,7 @@ use Exception;
 			
 			if($opts['Errors']) {
 				$err						= new Error();
-				$this->populate(EnvironmentManager::CONF_PHP, $path.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'errors.php');
+				$this->populate(EnvironmentManager::CONF_PHP, $path.DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'errors.php');
 				$this->set('err', $err);
 			}
 			
