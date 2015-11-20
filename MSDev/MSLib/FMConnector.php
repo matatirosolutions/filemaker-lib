@@ -191,9 +191,12 @@ use MSDev\MSLib\cURLclient;
 	 * 
 	 * @throws FMException
 	 */
-	 public function insert($layout, $data, $return = null) {
+	 public function insert($layout, $data, $return = null, $script = array()) {
 		// create the command, set the data, and execute
-		$cmd						= $this->fm->newAddCommand($layout, $data);	
+		$cmd						= $this->fm->newAddCommand($layout, $data);
+		foreach($script as $sc => $param) {
+			$cmd->setScript($sc, $param);
+		}	
 		$res						= $cmd->execute();
 
 		// see if an error was returned
@@ -228,9 +231,12 @@ use MSDev\MSLib\cURLclient;
 	 * 
 	 * @throws FMException
 	 */
-	 public function update($layout, $recid, $data, $return = null) {
+	 public function update($layout, $recid, $data, $return = null, $script = array()) {
 		// create the command, set the data, and execute
 		$cmd						= $this->fm->newEditCommand($layout, $recid, $data);
+		foreach($script as $sc => $param) {
+			$cmd->setScript($sc, $param);
+		}
 		$res						= $cmd->execute();
 	
 		// see if an error was returned
