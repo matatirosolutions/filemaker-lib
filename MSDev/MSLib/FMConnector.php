@@ -465,8 +465,15 @@ use MSDev\MSLib\cURLclient;
 							// and each field
 							foreach($pFields as $pf) {
 								
-								// and extract the data
-								$prOut[$pf]	= $pRow->getField($pf);
+							    // remove the name of the relationship from the front of the related field name if trim is set
+							    if(array_key_exists('trim', $options) && $options['trim'] && strpos($pf, '::')) {
+							        $f = substr($pf, strpos($pf, '::') + strlen('::') );
+							    } else {
+							        $f = $pf;
+							    }
+							    
+							    // and extract the data
+							    $prOut[$f]	= $pRow->getField($pf);
 							}
 							
 							// add in the ids if we've been asked to
