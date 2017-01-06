@@ -473,7 +473,13 @@ use MSDev\MSLib\cURLclient;
 							    }
 							    
 							    // and extract the data
-							    $prOut[$f]	= $pRow->getField($pf);
+							    if(array_key_exists('timestamps', $options) && in_array($pf, $options['timestamps']) && $pRow->getField($pf) != '') {
+							        $prOut[$f]			= $pRow->getFieldAsTimestamp($pf);
+							    } elseif(array_key_exists('decode', $options) && $options['decode'] ) {
+							        $prOut[$f]			= $pRow->getFieldUnencoded($pf);
+							    } else {
+							        $prOut[$f]			= $pRow->getField($pf);
+							    }
 							}
 							
 							// add in the ids if we've been asked to
