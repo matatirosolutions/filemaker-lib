@@ -165,6 +165,6 @@ use Exception;
 		$recipients 				= array(array('address' => $config['Email'],'name' => $config['Name'], 'type' => 'to'));
 		
 		// finally send the email
-		$res						= $this->sendEmail($recipients, $subject, $body);
+		return $this->sendEmail($recipients, $subject, $body);
 	}
 }
