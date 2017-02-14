@@ -75,6 +75,9 @@ use Exception;
 			if($config['SMTP']['SSL']) {
 				$this->SMTPSecure 	= "ssl";
 			}
+			if($config['SMTP']['TLS']) {
+			    $this->SMTPSecure 	= "tls";
+			}
 		}
 		
 		$this->FromName 			= $config['From'];
