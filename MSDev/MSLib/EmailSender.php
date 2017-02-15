@@ -109,6 +109,7 @@ use Exception;
 		$this->Subject  			= $subject;
 		$this->Body     			= $body;
 		$this->AltBody				= str_replace(array("<p>, <br />"), array("\n\n", "\n"), $body);
+		$this->isHTML(true);
 			
 		// check the recipients and add them as the correct type
 		foreach($recipients as $r) {
