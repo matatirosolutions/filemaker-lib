@@ -15,7 +15,7 @@
     	"php": ">=5.5.0",
     	"phpmailer/phpmailer": "5.2.*",
         "katzgrau/klogger": "1.0.*",
-        "matatirosoln/filemaker-api": "14.*"
+        "matatirosoln/filemaker-api": "15.*"
     },
     "autoload": {
         "psr-4": { "MSDev\\MSLib\\": "MSDev/MSLib" }

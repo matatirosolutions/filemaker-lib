@@ -17,7 +17,7 @@ class FMException extends \Exception {
 	/**
 	 * __construct
 	 *
-	 * @param numeric $code
+	 * @param integer $code
 	 * @param string $mess
 	 */
 	public function __construct($code, $mess) {
@@ -31,7 +31,7 @@ class FMException extends \Exception {
 	 *
 	 * Returns the relevant FileMaker error code
 	 *
-	 * @return numeric
+	 * @return integer
 	 */
 	public function getFMCode() {
 		return $this->fmCode;
