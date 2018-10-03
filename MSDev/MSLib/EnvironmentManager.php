@@ -23,14 +23,14 @@ use Exception;
 	protected $conf;
 	
 	const CONF_PHP					= 2;
-	
+
 	/**
 	 * get
-	 * 
+	 *
 	 * Retrieve a config value
-	 * 
+	 *
 	 * @param string $key		name of the value to return
-	 * @returns mixed|false		returns the value request or false if it does not exist
+	 * @return array|false		returns the value request or false if it does not exist
 	 */
 	 public function get($key) {
 	 	// does the requested item exist in the config

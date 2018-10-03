@@ -114,6 +114,14 @@ class FMConnector
             $cmd->setRange($start, $options['maxRecords']);
         }
 
+        if(array_key_exists('sort', $options)) {
+            $count = 1;
+            foreach($options['sort'] as $field => $order) {
+                $cmd->addSortRule($field, $count, $order);
+                $count++;
+            }
+        }
+
         // execute the call to the database
         $res = $cmd->execute();
 
