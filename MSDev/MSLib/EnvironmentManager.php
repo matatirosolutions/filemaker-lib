@@ -30,7 +30,7 @@ use Exception;
 	 * Retrieve a config value
 	 *
 	 * @param string $key		name of the value to return
-	 * @return array|false		returns the value request or false if it does not exist
+	 * @return FMConnector|EmailSender|false		returns the value request or false if it does not exist
 	 */
 	 public function get($key) {
 	 	// does the requested item exist in the config
